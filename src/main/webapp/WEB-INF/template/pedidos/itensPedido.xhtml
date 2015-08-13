@@ -1,0 +1,36 @@
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <p:dataTable value="" var="item" id="tabelaItens" >
+        <p:column headerText="SKU" style="text-align: center" width="100">
+            <p:inputText size="7"/>
+        </p:column>
+        <p:column headerText="Produto">
+            <p:autoComplete inputStyleClass="produto-tabela"/>
+        </p:column>
+        <p:column headerText="Valor unitário" style="text-align: right" width="120">
+            <h:outputText value="R$ 0,00"/>
+        </p:column>
+
+        <p:column headerText="Quantidade" style="text-align: center" width="100">
+            <p:inputText size="7" value="1"/>
+        </p:column>
+
+        <p:column headerText="Estoque" style="text-align: center" width="100">
+            <h:outputText value="0"/>
+        </p:column>
+
+        <p:column headerText="Valor total" style="text-align: right" width="120">
+            <h:outputText value="R$ 0,00"/>
+        </p:column>
+        
+        <p:columnGroup type="footer">
+            <p:row>
+                <p:column colspan="5" footerText="Subtotal" style="text-align: right"/>
+                <p:column footerText="R$ 0,00" style="text-align: right"/>
+            </p:row>
+        </p:columnGroup>
+    </p:dataTable>
+</ui:composition>
