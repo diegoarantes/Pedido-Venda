@@ -21,7 +21,8 @@ public class NovoBean {
      */
     public NovoBean() {
     }
-    public void testar(){
-        System.out.println("CHUPAAAN");
+
+    public void testar() {
+        throw new RuntimeException("LOUCURAAAAAAAAAAAAAAAAA TOTALLL");
     }
 }
