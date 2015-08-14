@@ -12,12 +12,13 @@
         <h:form>
             <h1>Novo Produto</h1>
 
+            <p:messages autoUpdate="true" closable="true"/>
             <p:toolbar style="margin-top: 20px">
                 <p:toolbarGroup>
-                    <h:form>
+
                     <p:button value="Novo" outcome="/produtos/cadastroProduto"/>
-                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{novoBean.testar}"/>
-                    </h:form>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroProdutoBean.salvar}" />
+
                 </p:toolbarGroup>
 
                 <p:toolbarGroup align="right">
@@ -47,7 +48,7 @@
                 <p:inputText id="valorUnitario" size="10" maxlength="10" styleClass="moeda"/>
 
                 <p:outputLabel value="Estoque" for="estoque"/>
-                <p:inputText id="estoque" size="10" maxlength="4"/>
+                <p:inputText id="estoque" size="10" maxlength="5" value="#{cadastroProdutoBean.produto.quantidadeEstoque}"/>
             </p:panelGrid>
         </h:form>
     </ui:define>
