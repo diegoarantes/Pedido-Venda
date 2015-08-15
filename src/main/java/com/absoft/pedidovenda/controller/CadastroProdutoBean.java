@@ -1,7 +1,8 @@
 package com.absoft.pedidovenda.controller;
 
 import com.absoft.pedidovenda.model.Produto;
-import javax.enterprise.context.RequestScoped;
+import java.io.Serializable;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -9,8 +10,10 @@ import javax.inject.Named;
  * @author Diego Arantes
  */
 @Named(value = "cadastroProdutoBean")
-@RequestScoped
-public class CadastroProdutoBean {
+@ViewScoped
+public class CadastroProdutoBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Produto produto;
 
