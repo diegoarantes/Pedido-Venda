@@ -1,5 +1,6 @@
 package com.absoft.pedidovenda.model;
 
+import com.absoft.pedidovenda.validation.SKU;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -31,7 +33,7 @@ public class Produto implements Serializable {
     @Column(nullable = false, length = 80)
     private String nome;
 
-    @NotBlank
+    @NotBlank @SKU
     @Column(nullable = false, length = 20, unique = true)
     private String sku;
 
