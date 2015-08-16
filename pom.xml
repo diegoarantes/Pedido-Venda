@@ -28,15 +28,16 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.3.11.Final</version>
-            <scope>provided</scope>
+            <version>4.2.3.Final</version>
+            <scope>compile</scope>
         </dependency>
 		
-         <!-- Implementação de EntityManager da JPA -->
+        <!-- Implementação de EntityManager da JPA -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.11.Final</version>
+            <version>4.2.3.Final</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Driver JDBC do MySQL -->
