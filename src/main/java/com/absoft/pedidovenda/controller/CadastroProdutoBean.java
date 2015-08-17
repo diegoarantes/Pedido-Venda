@@ -3,6 +3,7 @@ package com.absoft.pedidovenda.controller;
 import com.absoft.pedidovenda.model.Categoria;
 import com.absoft.pedidovenda.model.Produto;
 import com.absoft.pedidovenda.repository.Categorias;
+import com.absoft.pedidovenda.util.jsf.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -29,19 +30,25 @@ public class CadastroProdutoBean implements Serializable {
     private Categoria categoriaPai;
 
     private List<Categoria> categoriaRaizes;
+    private List<Categoria> subcategorias;
 
     public CadastroProdutoBean() {
         produto = new Produto();
     }
 
     public void inicializar() {
-        System.out.println("Inicializando ....");
-        categoriaRaizes = categorias.raizes();
+        if (FacesUtil.isNotPostBack()) { //Se não for post back não faça a consulta
+            categoriaRaizes = categorias.raizes();
+        }
+    }
 
+    public void carregarSubcategorias() {
+        subcategorias = categorias.subCategoriasDe(categoriaPai);
     }
 
     public void salvar() {
-        System.out.println("Categoria pai selecionada: "+categoriaPai.getDescricao());
+        System.out.println("Categoria pai selecionada: " + categoriaPai.getDescricao());
+        System.out.println("Subcategoria selecionada: " + produto.getCategoria().getDescricao());
     }
 
     public Produto getProduto() {
@@ -62,6 +69,10 @@ public class CadastroProdutoBean implements Serializable {
 
     public void setCategoriaPai(Categoria categoriaPai) {
         this.categoriaPai = categoriaPai;
+    }
+
+    public List<Categoria> getSubcategorias() {
+        return subcategorias;
     }
 
 }
