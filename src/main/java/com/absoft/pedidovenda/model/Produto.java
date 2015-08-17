@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -47,7 +46,7 @@ public class Produto implements Serializable {
     @Column(name = "quantidade_estoque", nullable = false, length = 5)
     private Integer quantidadeEstoque;
 
-    @NotNull
+    //@NotNull
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
