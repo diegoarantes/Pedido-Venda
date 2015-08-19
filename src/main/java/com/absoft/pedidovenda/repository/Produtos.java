@@ -6,7 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -22,13 +22,17 @@ public class Produtos implements Serializable {
     private EntityManager entityManager;
 
     public Produto guardar(Produto produto) {
-        EntityTransaction trx = entityManager.getTransaction();
-        trx.begin();
+        return entityManager.merge(produto);
+    }
 
-        produto = entityManager.merge(produto);
-
-        trx.commit();
-        return produto;
+    public Produto porSku(String sku) {
+        try {
+            return entityManager.createQuery("from Produto where upper(sku) = :sku", Produto.class)
+                    .setParameter("sku", sku.toUpperCase())
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
 }

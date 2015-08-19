@@ -2,6 +2,7 @@ package com.absoft.pedidovenda.service;
 
 import com.absoft.pedidovenda.model.Produto;
 import com.absoft.pedidovenda.repository.Produtos;
+import com.absoft.pedidovenda.util.jpa.Transactional;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -20,9 +21,14 @@ public class CadastroProdutoService implements Serializable {
 
     @Inject
     private Produtos produtos;
-
+    
+    @Transactional
     public Produto salvar(Produto produto) {
-        // TODO implementar regra de negocio
+        Produto produtoExistente = produtos.porSku(produto.getSku());
+
+        if (produtoExistente != null) {
+            throw new NegocioException("Já existe um produto com o SKU informado.");
+        }
         return produtos.guardar(produto);
     }
 
