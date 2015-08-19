@@ -6,5 +6,16 @@ package com.absoft.pedidovenda.model;
  */
 public enum StatusPedido {
 
-    ORCAMENTO, EMITIDO, CANCELADO
+    ORCAMENTO("Orçamento"), EMITIDO("Emitido"), CANCELADO("Cancelado");
+
+    private String descricao;
+
+    private StatusPedido(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
 }
