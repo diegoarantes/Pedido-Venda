@@ -59,4 +59,8 @@ public class Produtos implements Serializable {
         return criteria.list();
     }
 
+    public Produto porId(Long id) {
+        return entityManager.find(Produto.class, id);
+    }
+
 }
