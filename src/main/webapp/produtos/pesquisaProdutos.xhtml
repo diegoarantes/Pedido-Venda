@@ -9,12 +9,13 @@
     <ui:define name="titulo">Pesquisa produtos</ui:define>
 
     <ui:define name="corpo">
-        <h:form> <p:growl autoUpdate="true"/>
+        <h:form> 
             <h1>Pesquisa produtos</h1>
-
+            
+            <p:messages autoUpdate="true" closable="true"/>
             <p:toolbar style="margin-top: 20px">
                 <p:toolbarGroup>
-                    <p:commandButton value="Pesquisar"/>
+                    <p:commandButton value="Pesquisar" action="#{pesquisaProdutosBean.pesquisar}" update="@form"/>
                 </p:toolbarGroup>
 
                 <p:toolbarGroup align="right">
@@ -25,29 +26,31 @@
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
                          columnClasses="rotulo, campo">
                 <p:outputLabel value="SKU" for="sku"/>
-                <p:inputText id="sku" size="20"/>
+                <p:inputText id="sku" size="20" value="#{pesquisaProdutosBean.filtro.sku}"/>
 
                 <p:outputLabel value="Nome" for="nome"/>
-                <p:inputText id="nome" size="60"/>
+                <p:inputText id="nome" size="60" value="#{pesquisaProdutosBean.filtro.nome}"/>
             </p:panelGrid>
 
-            <p:dataTable id="produtosTable" value="" var="produto" 
+            <p:dataTable id="produtosTable" value="#{pesquisaProdutosBean.produtosFiltrados}" var="produto" 
                          style="margin-top: 20px" emptyMessage="Nenhum produto encontrado." rows="20" 
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                 <p:column headerText="SKU" style="text-align: center" width="100">
-                    <h:outputText value="123"/>
+                    <h:outputText value="#{produto.sku}"/>
                 </p:column>
                 <p:column headerText="Nome">
-                    <h:outputText value="Bala de Morango"/>
+                    <h:outputText value="#{produto.nome}"/>
                 </p:column>
                 <p:column headerText="Categoria" width="250">
-                    <h:outputText value="Doces - Balas e clicletes"/>
+                    <h:outputText value="#{produto.categoria.categoriaPai.descricao} - #{produto.categoria.descricao}"/>
                 </p:column>
                 <p:column headerText="Valor unitário" style="text-align: right" width="120">
-                    <h:outputText value="R$ 1,20"/>
+                    <h:outputText value="#{produto.valorUnitario}">
+                        <f:convertNumber type="currency"/>
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Estoque" style="text-align: center" width="100">
-                    <h:outputText value="98"/>
+                    <h:outputText value="#{produto.quantidadeEstoque}"/>
                 </p:column>
                 <p:column style="text-align: center" width="100">
                     <p:button icon="ui-icon-pencil" title="Editar"/>
