@@ -2,6 +2,8 @@ package com.absoft.pedidovenda.repository;
 
 import com.absoft.pedidovenda.model.Produto;
 import com.absoft.pedidovenda.repository.filter.ProdutoFilter;
+import com.absoft.pedidovenda.service.NegocioException;
+import com.absoft.pedidovenda.util.jpa.Transactional;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -9,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -30,6 +33,18 @@ public class Produtos implements Serializable {
 
     public Produto guardar(Produto produto) {
         return entityManager.merge(produto);
+    }
+
+    @Transactional
+    public void remover(Produto produto) {
+        try {
+            produto = porId(produto.getId()); //Busca produto
+            entityManager.remove(produto);
+            entityManager.flush(); //Faz todas as transações
+        } catch (PersistenceException ex) {
+            throw new NegocioException("Produto não pode ser excluído.");
+        }
+
     }
 
     public Produto porSku(String sku) {

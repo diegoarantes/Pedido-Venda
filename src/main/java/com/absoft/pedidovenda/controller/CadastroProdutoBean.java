@@ -30,7 +30,7 @@ public class CadastroProdutoBean implements Serializable {
     private CadastroProdutoService cadastroProdutoService;
 
     private Produto produto;
-
+    
     @NotNull
     private Categoria categoriaPai;
 
@@ -102,4 +102,4 @@ public class CadastroProdutoBean implements Serializable {
         return subcategorias;
     }
 
-}
+    }

@@ -9,7 +9,7 @@
     <ui:define name="titulo">Pesquisa produtos</ui:define>
 
     <ui:define name="corpo">
-        <h:form> 
+        <h:form id="frmPesquisa"> 
             <h1>Pesquisa produtos</h1>
 
             <p:messages autoUpdate="true" closable="true"/>
@@ -56,8 +56,9 @@
                     <p:button icon="ui-icon-pencil" title="Editar" outcome="/produtos/cadastroProduto">
                         <f:param name="produto" value="#{produto.id}"/>
                     </p:button>
-                    <p:commandButton icon="ui-icon-trash" title="Excluir">
-                        <p:confirm header="Confirmação" message="Tem certeza que deseja excluir o produto?" icon="ui-icon-alert" />
+                    <p:commandButton id="btExcluir" icon="ui-icon-trash" title="Excluir" process="@this" update="produtosTable" action="#{pesquisaProdutosBean.excluir}">
+                        <p:confirm header="Confirmação" message="Tem certeza que deseja excluir o produto ?" icon="ui-icon-alert" />
+                        <f:setPropertyActionListener target="#{pesquisaProdutosBean.produtoSelecionado}" value="#{produto}"/>
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
