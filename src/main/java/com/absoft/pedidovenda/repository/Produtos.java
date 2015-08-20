@@ -6,9 +6,8 @@ import com.absoft.pedidovenda.service.NegocioException;
 import com.absoft.pedidovenda.util.jpa.Transactional;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
@@ -22,8 +21,7 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Diego Arantes
  */
-@Named
-@RequestScoped
+@Dependent
 public class Produtos implements Serializable {
 
     private static final long serialVersionUID = 1L;

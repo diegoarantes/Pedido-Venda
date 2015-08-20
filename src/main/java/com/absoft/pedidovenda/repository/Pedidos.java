@@ -4,10 +4,9 @@ import com.absoft.pedidovenda.model.Pedido;
 import com.absoft.pedidovenda.repository.filter.PedidoFilter;
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import org.hibernate.Criteria;
@@ -16,8 +15,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-@Named
-@RequestScoped
+@Dependent
 public class Pedidos implements Serializable {
 
     private static final long serialVersionUID = 1L;
