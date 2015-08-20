@@ -278,4 +278,9 @@ public class Pedido implements Serializable {
         return this.getValorTotal().compareTo(BigDecimal.ZERO) < 0; //Verifica se o valor total é menor que 0
     }
 
+    @Transient
+    boolean isEmitido() {
+       return StatusPedido.EMITIDO.equals(this.getStatus());
+    }
+
 }

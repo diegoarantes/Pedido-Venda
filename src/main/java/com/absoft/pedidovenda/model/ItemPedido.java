@@ -80,11 +80,6 @@ public class ItemPedido implements Serializable {
         this.pedido = pedido;
     }
 
-    @Transient
-    public boolean isProdutoAssociado() {
-        return this.getProduto() != null && this.getProduto().getId() != null;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -108,8 +103,24 @@ public class ItemPedido implements Serializable {
     }
 
     @Transient
+    public boolean isProdutoAssociado() {
+        return this.getProduto() != null && this.getProduto().getId() != null;
+    }
+
+    @Transient
     public BigDecimal getValorTotal() {
         return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
+    }
+
+    @Transient
+    public boolean isEstoqueSulficiente() {
+        return this.getPedido().isEmitido() || this.getProduto().getId() == null
+                || this.getProduto().getQuantidadeEstoque() >= this.getQuantidade();
+    }
+
+    @Transient
+    public boolean isEstoqueInsulficiente() {
+        return !this.isEstoqueSulficiente();
     }
 
 }
