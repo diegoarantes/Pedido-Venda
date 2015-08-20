@@ -3,12 +3,16 @@ package com.absoft.pedidovenda.controller;
 import com.absoft.pedidovenda.model.Cliente;
 import com.absoft.pedidovenda.model.EnderecoEntrega;
 import com.absoft.pedidovenda.model.FormaPagamento;
+import com.absoft.pedidovenda.model.ItemPedido;
 import com.absoft.pedidovenda.model.Pedido;
+import com.absoft.pedidovenda.model.Produto;
 import com.absoft.pedidovenda.model.Usuario;
 import com.absoft.pedidovenda.repository.Clientes;
+import com.absoft.pedidovenda.repository.Produtos;
 import com.absoft.pedidovenda.repository.Usuarios;
 import com.absoft.pedidovenda.service.CadastroPedidoService;
 import com.absoft.pedidovenda.util.jsf.FacesUtil;
+import com.absoft.pedidovenda.validation.SKU;
 import java.io.Serializable;
 import java.util.List;
 import javax.inject.Named;
@@ -32,11 +36,19 @@ public class CadastroPedidoBean implements Serializable {
     private Clientes clientes;
 
     @Inject
+    private Produtos produtos;
+
+    @Inject
     private CadastroPedidoService cadastroPedidoService;
+
+    @SKU
+    private String sku;
 
     private Pedido pedido;
 
     private List<Usuario> vendedores;
+
+    private Produto produtoLinhaEditavel;
 
     public CadastroPedidoBean() {
         limpar();
@@ -45,7 +57,9 @@ public class CadastroPedidoBean implements Serializable {
     public void inicializar() {
         if (FacesUtil.isNotPostBack()) {
             this.vendedores = usuarios.vendedores();
-            
+
+            this.pedido.adicionarItemVazio();
+
             this.recalcularPedido(); //Verificar Depois se é Necessário
         }
     }
@@ -60,9 +74,53 @@ public class CadastroPedidoBean implements Serializable {
         FacesUtil.addInfoMessage("Pedido salvo com sucesso!");
 
     }
-    
-    public void recalcularPedido(){
+
+    public void recalcularPedido() {
         this.pedido.recalcularValorTotal();
+    }
+
+    public void carregarProdutoPorSku() {
+        if (this.sku != null || this.sku.equals("")) {
+            this.produtoLinhaEditavel = this.produtos.porSku(this.sku);
+            this.carregarProdutoLinhaEditavel();
+        }
+    }
+
+    public void carregarProdutoLinhaEditavel() {
+        ItemPedido item = this.pedido.getItens().get(0);
+
+        if (this.produtoLinhaEditavel != null) {
+            if (this.existeItemComProduto(this.produtoLinhaEditavel)) {
+                FacesUtil.addErrorMessage("Já existe um item no pedido com o produto informado.");
+            } else {
+
+                item.setProduto(this.produtoLinhaEditavel);
+                item.setValorUnitario(this.produtoLinhaEditavel.getValorUnitario());
+
+                this.pedido.adicionarItemVazio();
+                this.produtoLinhaEditavel = null;
+                this.sku = null;
+
+                this.pedido.recalcularValorTotal();
+
+            }
+        }
+    }
+
+    private boolean existeItemComProduto(Produto produto) {
+        boolean existeItem = false;
+
+        for (ItemPedido item : this.getPedido().getItens()) {
+            if ((produto).equals(item.getProduto())) {
+                existeItem = true;
+                break;
+            }
+        }
+        return existeItem;
+    }
+
+    public List<Produto> completarProduto(String nome) {
+        return this.produtos.porNome(nome);
     }
 
     public FormaPagamento[] getFormasPagamento() {
@@ -83,6 +141,22 @@ public class CadastroPedidoBean implements Serializable {
 
     public List<Usuario> getVendedores() {
         return vendedores;
+    }
+
+    public Produto getProdutoLinhaEditavel() {
+        return produtoLinhaEditavel;
+    }
+
+    public void setProdutoLinhaEditavel(Produto produtoLinhaEditavel) {
+        this.produtoLinhaEditavel = produtoLinhaEditavel;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public boolean isEditando() {
