@@ -73,4 +73,8 @@ public class Pedidos implements Serializable {
         return manager.merge(pedido);
     }
 
+    public Pedido porId(Long id) {
+        return manager.find(Pedido.class, id);
+    }
+
 }
