@@ -6,19 +6,24 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
 
+
+    <f:metadata>
+        <f:event listener="#{cadastroPedidoBean.inicializar}" type="preRenderView"/>
+    </f:metadata>
+
     <ui:define name="titulo">Novo pedido</ui:define>
 
     <ui:define name="corpo">
         <h:form>
             <h1>Novo pedido</h1>
             <p:messages autoUpdate="true" closable="true" />
-            
+
             <ui:include src="/WEB-INF/template/pedidos/botoesPedido.xhtml"/>
             <ui:include src="/WEB-INF/template/pedidos/capaPedido.xhtml"/>
 
             <p:tabView style="margin-top: 20px">
                 <p:tab title="Itens">
-                    <ui:include src="/WEB-INF/template/pedidos/itensPedido.xhtml"/>
+                    <!--                    <ui:include src="/WEB-INF/template/pedidos/itensPedido.xhtml"/>-->
                 </p:tab>
                 <p:tab title="Dados de entrega">
                     <ui:include src="/WEB-INF/template/pedidos/dadosEntregaPedido.xhtml"/>
